@@ -1,0 +1,61 @@
+[
+  {
+    "type": "text",
+    "name": "firstName",
+    "placeholder": "Richard",
+    "label": "First Name",
+    "value": "",
+    "validations": [
+      {
+        "type": "required"
+      }
+    ]
+  },
+  {
+    "type": "text",
+    "name": "lastName",
+    "placeholder": "Arocutipa",
+    "label": "Last Name",
+    "value": "",
+    "validations": [
+      {
+        "type": "required"
+      },
+      {
+        "type": "minLength",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "type": "email",
+    "name": "email",
+    "placeholder": "richard@gmail.com",
+    "label": "Correo",
+    "value": "",
+    "validations": [
+      {
+        "type": "required"
+      },
+      {
+        "type": "email"
+      }
+    ]
+  },
+  {
+    "type": "select",
+    "name": "favoriteGame",
+    "label": "Correo",
+    "value": "",
+    "options": [
+      { "id": 1, "label": "serupe smash" },
+      { "id": 2, "label": "resident evil" },
+      { "id": 3, "label": "god of war" }
+    ],
+    "validations": [
+      {
+        "type": "required"
+      }
+    ]
+  }
+]
