@@ -1,50 +1,69 @@
 import "../styles/styles.css";
-import { useFormik } from "formik";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 export const FormikComponents = () => {
-  const { handleSubmit, errors, touched, getFieldProps } = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-    },
-    onSubmit: (values) => {
-      console.log(values);
-    },
-    validationSchema: Yup.object({
-      firstName: Yup.string()
-        .max(15, "Debe de tener 15 caracteres o menos")
-        .required("requerido"),
-      lastName: Yup.string()
-        .max(15, "Debe de tener 15 caracteres o menos")
-        .required("requerido"),
-      email: Yup.string()
-        .email("Debe tener un formato correcto")
-        .required("requerido"),
-    }),
-  });
   return (
     <div>
       <h1>Formik Components</h1>
 
-      <form noValidate onSubmit={handleSubmit}>
-        <label htmlFor="firstName">First Name</label>
-        <input type="text" {...getFieldProps("firstName")} />
-        {touched.firstName && errors.firstName && (
-          <span>{errors.firstName}</span>
+      <Formik
+        initialValues={{
+          firstName: "",
+          lastName: "",
+          email: "",
+          terms: false,
+          jobType: "",
+        }}
+        onSubmit={(values) => {
+          console.log(values);
+        }}
+        validationSchema={Yup.object({
+          firstName: Yup.string()
+            .max(15, "Debe de tener 15 caracteres o menos")
+            .required("requerido"),
+          lastName: Yup.string()
+            .max(15, "Debe de tener 15 caracteres o menos")
+            .required("requerido"),
+          email: Yup.string()
+            .email("Debe tener un formato correcto")
+            .required("requerido"),
+          terms: Yup.boolean().oneOf([true], "Debe de aceptar las condiciones"),
+          jobType: Yup.string().required("Rquerido"),
+        })}
+      >
+        {(formik) => (
+          <Form>
+            <label htmlFor="firstName">First Name</label>
+            <Field name="firstName" type="text" />
+            <ErrorMessage name="firstName" component="span" />
+
+            <label htmlFor="lastName">Last Name</label>
+            <Field name="lastName" type="text" />
+            <ErrorMessage name="lastName" component="span" />
+
+            <label htmlFor="email">Email Address</label>
+            <Field name="email" type="email" />
+            <ErrorMessage name="email" component="span" />
+
+            <label htmlFor="jobType">Job Type</label>
+            <Field name="jobType" as="select">
+              <option value="">Pick something</option>
+              <option value="developer">Developer</option>
+              <option value="designer">Designer</option>
+            </Field>
+            <ErrorMessage name="jobType" component="span" />
+
+            <label>
+              <Field name="terms" type="checkbox" />
+              Terms and conditions
+            </label>
+            <ErrorMessage name="terms" component="span" />
+
+            <button type="submit">Submit</button>
+          </Form>
         )}
-
-        <label htmlFor="lastName">Last Name</label>
-        <input type="text" {...getFieldProps("lastName")} />
-        {touched.lastName && errors.lastName && <span>{errors.lastName}</span>}
-
-        <label htmlFor="email">Email Address</label>
-        <input type="email" {...getFieldProps("email")} />
-        {touched.email && errors.email && <span>{errors.email}</span>}
-
-        <button type="submit">Submit</button>
-      </form>
+      </Formik>
     </div>
   );
 };
